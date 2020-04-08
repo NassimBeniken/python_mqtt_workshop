@@ -1,6 +1,5 @@
 import paho.mqtt.client as mqtt
 from yeelight import Bulb
-from deepdiff import DeepDiff
 from pynput import keyboard
 import time
 
@@ -18,14 +17,16 @@ lamp_2_properties = lamp_2.get_properties(requested_properties=["power", "bright
 def on_log(client, userdata, level, buf):
     print("log : " + buf)
 
-### Information about connection ==> OK or KO with returned code
+### Information about connection 
+### ==> OK or KO with returned code
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Conected OK")
     else:
         print("Bad connection, returned code : " + str(rc))
 
-### Clients subscribed to a topic will see incoming messages as below
+### Clients subscribed to a topic will see 
+### incoming messages as below
 def on_message(client, userdata, message):
     print("message received " ,str(message.payload.decode("utf-8")))
     print("message topic=",message.topic)
@@ -61,7 +62,8 @@ def on_press(key):
         stop_program = True
         return False
 
-### Publish a message to a topic when a change is detected
+### Publish a message to the corresponding topic
+### when a change is detected on one of the lamps
 with keyboard.Listener(on_press = on_press) as listener:
     while stop_program == False:
         if lamp_1_properties != lamp_1.get_properties(requested_properties=["power", "bright", "rgb", "name"]):
@@ -73,6 +75,7 @@ with keyboard.Listener(on_press = on_press) as listener:
             publication = str(lamp_2.get_properties(requested_properties=["power", "bright", "rgb", "name"])).replace("\'", "\"")
             client.publish("/helloworld2", publication)
             lamp_2_properties = lamp_2.get_properties(requested_properties=["power", "bright", "rgb", "name"])
+            
         time.sleep(3)
 
 ### Stop the loop
