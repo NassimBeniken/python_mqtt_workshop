@@ -81,7 +81,6 @@ def on_press(key):
 ### when a change is detected on one of the lamps
 with keyboard.Listener(on_press = on_press) as listener:
     while stop_program == False:
-
         if lamp_1_properties != lamp_1.get_properties(requested_properties=["power", "bright", "rgb", "name"]):
             publication = str(lamp_1.get_properties(requested_properties=["power", "bright", "rgb", "name"])).replace("\'", "\"")
             client.publish("/bulb1", publication)
