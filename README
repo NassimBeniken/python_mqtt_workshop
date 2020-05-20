@@ -5,3 +5,5 @@ The objective is to send information about connected lamps (Yeelight) to a MQTT 
 When a change is detected in the properties of one of the lamps (there are two lamps), the information (properties) of the lamp are sent to the MQTT server.
 
 On the Raspberry, a Node Red server is present, making graphs and statistics about power, brightness, color etc... of the lamps.
+
+The state of the lamps can also be modified from anywhere (power On/Off)
